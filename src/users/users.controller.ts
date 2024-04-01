@@ -12,14 +12,28 @@ import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import * as mongoose from 'mongoose';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CreateUserCommand } from './commands/impl/create-user.command';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return this.commandBus.execute(
+      new CreateUserCommand(
+        createUserDto.firstName,
+        createUserDto.lastName,
+        createUserDto.email,
+        createUserDto.password,
+        createUserDto.username,
+      ),
+    );
   }
 
   @Get()
