@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CommandBus } from '@nestjs/cqrs';
+
 import { Model, ObjectId } from 'mongoose';
 import { User } from './interfaces/user.interface';
 // import { CreateUserCommand } from './commands/impl/create-user.command';
