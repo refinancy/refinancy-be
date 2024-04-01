@@ -14,13 +14,13 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     @Inject('USER_MODEL') private readonly userModel: Model<User>,
   ) {}
 
-  async execute(command: CreateUserCommand) {
-    const { email, firstName, lastName, password, username } = command;
+  async execute() {
+    const { email, firstName, lastName, password, username } = this.command;
     // find user by email
     // if (user) {
     //   throw new Error('User already exists');
     // }
-    const createdUser = await this.userModel.create(command);
+    const createdUser = await this.userModel.create(this.command);
     createdUser.save();
   }
 }
