@@ -1,26 +1,24 @@
-import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { Module, forwardRef } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserRepository } from './repository/user.repository';
-import { CommandHandlers } from './commands';
+
+import { CommandHandlers, Commands } from './commands';
 import { EventHandlers } from './events/handlers';
-import { QueryHandlers } from './queries/handlers';
-import { UsersSagas } from './sagas/users.sagas';
+
 import { DatabaseModule } from 'src/database/database.module';
 import { usersProviders } from './users.providers';
+import { QueryHandlers, UserQueries } from './queries';
 
 @Module({
-  imports: [CqrsModule, DatabaseModule],
+  imports: [CqrsModule, forwardRef(() => DatabaseModule)],
   controllers: [UsersController],
   providers: [
-    UsersService,
     ...usersProviders,
-    UserRepository,
     ...CommandHandlers,
+    ...Commands,
     ...EventHandlers,
     ...QueryHandlers,
-    UsersSagas,
+    ...UserQueries,
   ],
 })
 export class UsersModule {}
