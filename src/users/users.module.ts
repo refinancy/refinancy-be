@@ -22,3 +22,10 @@ import { QueryHandlers, UserQueries } from './queries';
   ],
 })
 export class UsersModule {}
+
+// create response file
+// apply swagger
+// apply validation ( zod )
+// apply tests
+// create user repository and remove code dupplication
+// apply exception handler

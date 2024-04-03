@@ -10,8 +10,8 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
   constructor(@Inject('USER_MODEL') private readonly userModel: Model<User>) {}
 
   async execute(command: DeleteUserCommand) {
-    // find user by email
-    // if (user) {
+    // find user by id
+    // if (!user) {
     //   throw new Error('User not found');
     // }
     console.log('command', command);

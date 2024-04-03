@@ -3,12 +3,11 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from './commands/impl/create-user.command';
@@ -17,6 +16,8 @@ import { GetUserQuery } from './queries/impl/get-user.queries';
 import { FindOneUserDto } from './dto/find-one-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
 import { DeleteUserCommand } from './commands/impl/delete-user.command';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserCommand } from './commands/impl/update-user.command';
 
 @Controller('users')
 export class UsersController {
@@ -48,13 +49,19 @@ export class UsersController {
     return this.queryBus.execute(new GetUserQuery(params.id));
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update({
-  //     _id: mongoose.Types.ObjectId(id),
-  //     updateUserDto,
-  //   });
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.commandBus.execute(
+      new UpdateUserCommand(
+        id,
+        updateUserDto.firstName,
+        updateUserDto.lastName,
+        updateUserDto.email,
+        updateUserDto.password,
+        updateUserDto.username,
+      ),
+    );
+  }
 
   @Delete(':id')
   async remove(@Param() params: DeleteUserDto) {
