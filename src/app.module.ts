@@ -7,7 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersController } from './users/users.controller';
 import { databaseProviders } from './database/database.providers';
 import { usersProviders } from './users/users.providers';
-import { UsersService } from './users/users.service';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
@@ -16,13 +16,9 @@ import { UsersService } from './users/users.service';
     }),
     UsersModule,
     DatabaseModule,
+    CqrsModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [
-    AppService,
-    ...databaseProviders,
-    ...usersProviders,
-    UsersService,
-  ],
+  providers: [AppService, ...databaseProviders, ...usersProviders],
 })
 export class AppModule {}

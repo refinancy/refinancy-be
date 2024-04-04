@@ -3,28 +3,31 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
-import * as mongoose from 'mongoose';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from './commands/impl/create-user.command';
+import { GetUsersQuery } from './queries/impl/get-users.queries';
+import { GetUserQuery } from './queries/impl/get-user.queries';
+import { FindOneUserDto } from './dto/find-one-user.dto';
+import { DeleteUserDto } from './dto/delete-user.dto';
+import { DeleteUserCommand } from './commands/impl/delete-user.command';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserCommand } from './commands/impl/update-user.command';
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     return this.commandBus.execute(
       new CreateUserCommand(
         createUserDto.firstName,
@@ -37,27 +40,32 @@ export class UsersController {
   }
 
   @Get()
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findAll(): Promise<User[]> {
+    return this.queryBus.execute(new GetUsersQuery());
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    const objectId = new mongoose.Schema.ObjectId(id);
-    return this.usersService.findOne(objectId);
+  async findOne(@Param() params: FindOneUserDto) {
+    return this.queryBus.execute(new GetUserQuery(params.id));
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update({
-  //     _id: mongoose.Types.ObjectId(id),
-  //     updateUserDto,
-  //   });
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.commandBus.execute(
+      new UpdateUserCommand(
+        id,
+        updateUserDto.firstName,
+        updateUserDto.lastName,
+        updateUserDto.email,
+        updateUserDto.password,
+        updateUserDto.username,
+      ),
+    );
+  }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    const objectId = new mongoose.Schema.ObjectId(id);
-    return this.usersService.remove(objectId);
+  async remove(@Param() params: DeleteUserDto) {
+    console.log('params', params);
+    return this.commandBus.execute(new DeleteUserCommand(params.id));
   }
 }

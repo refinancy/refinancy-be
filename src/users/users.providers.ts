@@ -1,13 +1,12 @@
 import * as mongoose from 'mongoose';
 
 import { UserSchema } from './schemas/user.schema';
-import { Provider } from '@nestjs/common';
 
-export const usersProviders: Provider[] = [
+export const usersProviders = [
   {
     provide: 'USER_MODEL',
-    useFactory: (mongoose: mongoose.Mongoose) =>
-      mongoose.model('User', UserSchema),
+    useFactory: (connection: mongoose.Connection) =>
+      connection.model('User', UserSchema),
     inject: ['DATABASE_CONNECTION'],
   },
 ];
