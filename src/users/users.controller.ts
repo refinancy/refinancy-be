@@ -32,9 +32,9 @@ export class UsersController {
       new CreateUserCommand(
         createUserDto.firstName,
         createUserDto.lastName,
+        createUserDto.username,
         createUserDto.email,
         createUserDto.password,
-        createUserDto.username,
       ),
     );
   }
@@ -56,16 +56,15 @@ export class UsersController {
         id,
         updateUserDto.firstName,
         updateUserDto.lastName,
+        updateUserDto.username,
         updateUserDto.email,
         updateUserDto.password,
-        updateUserDto.username,
       ),
     );
   }
 
   @Delete(':id')
   async remove(@Param() params: DeleteUserDto) {
-    console.log('params', params);
     return this.commandBus.execute(new DeleteUserCommand(params.id));
   }
 }
