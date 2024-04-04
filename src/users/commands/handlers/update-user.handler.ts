@@ -1,5 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User } from 'src/users/interfaces/user.interface';
 import { UpdateUserCommand } from '../impl/update-user.command';
@@ -10,8 +15,19 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
   constructor(@Inject('USER_MODEL') private readonly userModel: Model<User>) {}
 
   async execute(command: UpdateUserCommand) {
-    const ok = await this.userModel.findById({ _id: command.id }).exec();
-    const updated = await ok
+    const user = await this.userModel.findById(command.id).exec();
+    const users = await this.userModel.find().exec();
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    // verify if this email already exists
+    // Time Complexity O(n) * Perform it using some db schema if email is unique ( if exists)
+    for (const user in users) {
+      if (users[user].email === command.email) {
+        throw new BadRequestException('Email already exists');
+      }
+    }
+    const updated = await user
       .updateOne({
         firstName: command.firstName,
         lastName: command.lastName,
