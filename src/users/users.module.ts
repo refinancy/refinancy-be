@@ -4,8 +4,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 
 import { CommandHandlers, Commands } from './commands';
 import { EventHandlers } from './events/handlers';
-
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { usersProviders } from './users.providers';
 import { QueryHandlers, UserQueries } from './queries';
 
@@ -28,4 +27,3 @@ export class UsersModule {}
 // apply validation ( zod )
 // apply tests
 // create user repository and remove code dupplication
-// apply exception handler
