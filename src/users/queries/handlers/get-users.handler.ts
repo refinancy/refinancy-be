@@ -14,6 +14,8 @@ export class GetUsersHandler implements IQueryHandler<GetUsersQuery> {
   ) {}
 
   async execute(): Promise<QueryUserResponse[]> {
-    return await this.userModel.find().exec();
+    const users = await this.userModel.find({}, { password: false }).exec();
+
+    return users;
   }
 }
