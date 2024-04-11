@@ -1,14 +1,21 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import * as clc from 'cli-color';
 import { GetUsersQuery } from '../impl/get-users.queries';
-import { UserRepository } from 'src/users/repository/user.repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { User } from 'src/users/interfaces/user.interface';
+import { QueryUserResponse } from 'src/users/responses/query-user.response';
 
+@Injectable()
 @QueryHandler(GetUsersQuery)
 export class GetUsersHandler implements IQueryHandler<GetUsersQuery> {
-  constructor(private readonly repository: UserRepository) {}
+  constructor(
+    private readonly query: GetUsersQuery,
+    @Inject('USER_MODEL') private readonly userModel: Model<User>,
+  ) {}
 
-  async execute(query: GetUsersQuery) {
-    console.log(clc.yellowBright('Async GetHeroesQuery...'));
-    return this.repository.findAll();
+  async execute(): Promise<QueryUserResponse[]> {
+    const users = await this.userModel.find({}, { password: false }).exec();
+
+    return users;
   }
 }
