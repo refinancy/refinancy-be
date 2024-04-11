@@ -8,6 +8,12 @@ import { UsersController } from './users/users.controller';
 import { databaseProviders } from './database/database.providers';
 import { usersProviders } from './users/users.providers';
 import { CqrsModule } from '@nestjs/cqrs';
+import { recipesProviders } from './recipes/recipes.providers';
+import { RecipesController } from './recipes/recipes.controller';
+import { RecipesModule } from './recipes/recipes.module';
+import { ExpensesController } from './expenses/expenses.controller';
+import { expensesProviders } from './expenses/expenses.providers';
+import { ExpensesModule } from './expenses/expenses.module';
 
 @Module({
   imports: [
@@ -15,10 +21,23 @@ import { CqrsModule } from '@nestjs/cqrs';
       isGlobal: true,
     }),
     UsersModule,
+    RecipesModule,
+    ExpensesModule,
     DatabaseModule,
     CqrsModule,
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, ...databaseProviders, ...usersProviders],
+  controllers: [
+    AppController,
+    UsersController,
+    RecipesController,
+    ExpensesController,
+  ],
+  providers: [
+    AppService,
+    ...databaseProviders,
+    ...usersProviders,
+    ...recipesProviders,
+    ...expensesProviders,
+  ],
 })
 export class AppModule {}
