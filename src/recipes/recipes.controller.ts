@@ -24,7 +24,7 @@ import { DeleteRecipeCommand } from './commands/impl/delete-recipe.command';
 import { GetRecipesQuery } from './queries/impl/get-recipes.queries';
 import { GetRecipeQuery } from './queries/impl/get-recipe.queries';
 
-@ApiTags(tags.users.name)
+@ApiTags(tags.recipes.name)
 @Controller('recipes')
 export class RecipesController {
   constructor(

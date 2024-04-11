@@ -14,6 +14,9 @@ import { RecipesModule } from './recipes/recipes.module';
 import { ExpensesController } from './expenses/expenses.controller';
 import { expensesProviders } from './expenses/expenses.providers';
 import { ExpensesModule } from './expenses/expenses.module';
+import { cashflowsProviders } from './cashflows/cashflows.providers';
+import { CashflowsController } from './cashflows/cashflows.controller';
+import { CashflowsModule } from './cashflows/cashflows.module';
 
 @Module({
   imports: [
@@ -23,6 +26,7 @@ import { ExpensesModule } from './expenses/expenses.module';
     UsersModule,
     RecipesModule,
     ExpensesModule,
+    CashflowsModule,
     DatabaseModule,
     CqrsModule,
   ],
@@ -31,6 +35,7 @@ import { ExpensesModule } from './expenses/expenses.module';
     UsersController,
     RecipesController,
     ExpensesController,
+    CashflowsController,
   ],
   providers: [
     AppService,
@@ -38,6 +43,7 @@ import { ExpensesModule } from './expenses/expenses.module';
     ...usersProviders,
     ...recipesProviders,
     ...expensesProviders,
+    ...cashflowsProviders,
   ],
 })
 export class AppModule {}
