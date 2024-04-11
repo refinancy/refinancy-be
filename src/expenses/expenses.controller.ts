@@ -23,7 +23,7 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { DeleteExpenseDto } from './dto/delete-expense.dto';
 import { DeleteExpenseCommand } from './commands/impl/delete-expense.command';
 
-@ApiTags(tags.users.name)
+@ApiTags(tags.expenses.name)
 @Controller('expenses')
 export class ExpensesController {
   constructor(
