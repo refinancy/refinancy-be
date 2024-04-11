@@ -11,4 +11,8 @@ export class CreateUserResponse {
   readonly username: string;
   @ApiProperty({ example: 'johndoe@email.com', type: String })
   readonly email: string;
+  @ApiProperty({ example: '2020-08-31T00:00:00.000Z', type: Date })
+  readonly createdAt: Date;
+  @ApiProperty({ example: '2020-08-31T00:00:00.000Z', type: Date })
+  readonly updatedAt: Date;
 }
