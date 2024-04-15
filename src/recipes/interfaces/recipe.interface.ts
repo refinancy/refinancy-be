@@ -6,5 +6,5 @@ export interface Recipe extends Document {
   readonly description: string;
   readonly value: number;
   readonly receivedAt: Date;
-  readonly user: User;
+  readonly user_id: User;
 }
