@@ -14,10 +14,8 @@ export class CreateCashflowHandler
     @Inject('CASHFLOW_MODEL') private readonly cashflowModel: Model<Cashflow>,
   ) {}
 
-  async execute(
-    command: CreateCashflowCommand,
-  ): Promise<CreateCashflowResponse> {
+  async execute(command: CreateCashflowCommand): Promise<void> {
     const createdCashflow = await this.cashflowModel.create(command);
-    return createdCashflow;
+    // return createdCashflow;
   }
 }

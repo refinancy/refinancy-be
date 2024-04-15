@@ -18,6 +18,9 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     }
     // refactor to use a repository
     const createdUser = await this.userModel.create(command);
-    return createdUser;
+    const { password, ...userWithoutPassword } = createdUser.toObject();
+
+    // Retornar o objeto sem o campo password
+    return userWithoutPassword;
   }
 }

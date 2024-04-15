@@ -8,6 +8,7 @@ export const RecipeSchema = new mongoose.Schema<Recipe>(
     description: String,
     value: Number,
     receivedAt: Date,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true },
 );
