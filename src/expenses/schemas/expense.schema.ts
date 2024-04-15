@@ -9,6 +9,7 @@ export const ExpenseSchema = new mongoose.Schema<Expense>(
     description: String,
     value: Number,
     paidAt: Date,
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true },
 );
