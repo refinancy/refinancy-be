@@ -20,6 +20,12 @@ export class CreateRecipeDto {
   })
   readonly description: string;
   @ApiProperty({
+    type: String,
+    description: 'Creator Id',
+    example: '5f4b3b3b4f6f4b3b3b4f6f4b',
+  })
+  readonly user_id: string;
+  @ApiProperty({
     type: Number,
     description: 'USD.',
     example: 'R$ 1000.00',
