@@ -6,6 +6,30 @@ export class UpdateCashflowResponse {
   @ApiProperty({ example: 'Monthly report.', type: String })
   readonly description: string;
   @ApiProperty({
+    type: String,
+    description: 'User Id.',
+    example: '5f4e3f3f4f3f4f3f4f3f4f3f',
+  })
+  readonly user_id: string;
+  @ApiProperty({
+    description: 'Total Recipe Amount.',
+    example: '5000',
+    type: Number,
+  })
+  readonly total_recipe_amount: number;
+  @ApiProperty({
+    description: 'Total Expense Amount.',
+    example: '3000',
+    type: Number,
+  })
+  readonly total_expense_amount: number;
+  @ApiProperty({
+    description: 'Total.',
+    example: '2000',
+    type: Number,
+  })
+  readonly total: number;
+  @ApiProperty({
     description: 'Started At.',
     type: Date,
     example: '2020-08-31T00:00:00.000Z',
