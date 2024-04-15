@@ -50,6 +50,7 @@ export class CashflowsController {
     return this.commandBus.execute(
       new CreateCashflowCommand(
         createCashflowDto.description,
+        createCashflowDto.user_id,
         createCashflowDto.startedAt,
         createCashflowDto.endedAt,
       ),
@@ -105,6 +106,10 @@ export class CashflowsController {
       new UpdateCashflowCommand(
         id,
         updateCashflowDto.description,
+        updateCashflowDto.user_id,
+        updateCashflowDto.total_recipe_amount,
+        updateCashflowDto.total_expense_amount,
+        updateCashflowDto.total,
         updateCashflowDto.startedAt,
         updateCashflowDto.endedAt,
       ),
