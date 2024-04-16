@@ -6,12 +6,6 @@ export class CreateCashflowResponse {
   @ApiProperty({ example: 'Monthly report.', type: String })
   readonly description: string;
   @ApiProperty({
-    description: 'User Id.',
-    example: '5f4e3f3f4f3f4f3f4f3f4f3f',
-    type: String,
-  })
-  readonly user_id: string;
-  @ApiProperty({
     description: 'Total Recipe Amount.',
     example: '5000',
     type: Number,
