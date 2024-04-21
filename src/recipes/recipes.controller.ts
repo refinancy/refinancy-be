@@ -55,7 +55,6 @@ export class RecipesController {
         createRecipeDto.description,
         createRecipeDto.user_id,
         createRecipeDto.value,
-        createRecipeDto.receivedAt,
       ),
     );
   }

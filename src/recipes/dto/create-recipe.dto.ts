@@ -31,10 +31,4 @@ export class CreateRecipeDto {
     example: 'R$ 1000.00',
   })
   readonly value: number;
-  @ApiProperty({
-    type: Date,
-    description: 'Received At.',
-    example: '2020-08-31T00:00:00.000Z',
-  })
-  readonly receivedAt: Date;
 }

@@ -9,6 +9,12 @@ export class UpdateRecipeDto extends PartialType(CreateRecipeDto) {
   })
   _id: string;
   @ApiProperty({
+    type: Date,
+    description: 'Received At.',
+    example: '2020-08-31T00:00:00.000Z',
+  })
+  readonly receivedAt: Date;
+  @ApiProperty({
     type: CreateRecipeDto,
   })
   recipe: CreateRecipeDto;

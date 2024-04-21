@@ -17,6 +17,7 @@ export class CreateRecipeHandler
   async execute(command: CreateRecipeCommand): Promise<CreateRecipeResponse> {
     const createdRecipe = await this.recipeModel.create({
       ...command,
+      receivedAt: new Date(),
       user: command.user_id,
     });
     return createdRecipe;
