@@ -54,7 +54,6 @@ export class ExpensesController {
         createExpenseDto.description,
         createExpenseDto.user_id,
         createExpenseDto.value,
-        createExpenseDto.paidAt,
       ),
     );
   }
