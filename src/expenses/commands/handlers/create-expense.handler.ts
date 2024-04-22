@@ -15,7 +15,11 @@ export class CreateExpenseHandler
   ) {}
 
   async execute(command: CreateExpenseCommand): Promise<CreateExpenseResponse> {
-    const createdExpense = await this.expenseModel.create(command);
+    const createdExpense = await this.expenseModel.create({
+      ...command,
+      paidAt: new Date(),
+      user: command.user_id,
+    });
     return createdExpense;
   }
 }

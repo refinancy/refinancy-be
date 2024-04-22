@@ -53,8 +53,8 @@ export class RecipesController {
         createRecipeDto.title,
         createRecipeDto.from,
         createRecipeDto.description,
+        createRecipeDto.user_id,
         createRecipeDto.value,
-        createRecipeDto.receivedAt,
       ),
     );
   }
@@ -110,6 +110,7 @@ export class RecipesController {
         updateRecipeDto.title,
         updateRecipeDto.from,
         updateRecipeDto.description,
+        updateRecipeDto.user_id,
         updateRecipeDto.value,
         updateRecipeDto.receivedAt,
       ),

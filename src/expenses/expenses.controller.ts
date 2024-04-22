@@ -52,8 +52,8 @@ export class ExpensesController {
         createExpenseDto.title,
         createExpenseDto.from,
         createExpenseDto.description,
+        createExpenseDto.user_id,
         createExpenseDto.value,
-        createExpenseDto.paidAt,
       ),
     );
   }
@@ -109,6 +109,7 @@ export class ExpensesController {
         updateExpenseDto.title,
         updateExpenseDto.from,
         updateExpenseDto.description,
+        updateExpenseDto.user_id,
         updateExpenseDto.value,
         updateExpenseDto.paidAt,
       ),

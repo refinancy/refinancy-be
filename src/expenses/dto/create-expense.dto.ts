@@ -20,15 +20,15 @@ export class CreateExpenseDto {
   })
   readonly description: string;
   @ApiProperty({
+    type: String,
+    description: 'Creator Id',
+    example: '5f4b3b3b4f6f4b3b3b4f6f4b',
+  })
+  readonly user_id: string;
+  @ApiProperty({
     type: Number,
     description: 'USD.',
     example: 'R$ 1000.00',
   })
   readonly value: number;
-  @ApiProperty({
-    type: Date,
-    description: 'Paid At.',
-    example: '2020-08-31T00:00:00.000Z',
-  })
-  readonly paidAt: Date;
 }
