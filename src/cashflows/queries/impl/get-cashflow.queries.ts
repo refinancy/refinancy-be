@@ -1,3 +1,3 @@
-export class GetCashflowQuery {
-  constructor(public id: string) {}
+export class GetCashflowByUserIdQuery {
+  constructor(public user_id: string) {}
 }

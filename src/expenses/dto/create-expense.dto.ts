@@ -31,10 +31,4 @@ export class CreateExpenseDto {
     example: 'R$ 1000.00',
   })
   readonly value: number;
-  @ApiProperty({
-    type: Date,
-    description: 'Paid At.',
-    example: '2020-08-31T00:00:00.000Z',
-  })
-  readonly paidAt: Date;
 }

@@ -5,6 +5,5 @@ export class CreateRecipeCommand {
     public description: string,
     public user_id: string,
     public value: number,
-    public receivedAt: Date,
   ) {}
 }
