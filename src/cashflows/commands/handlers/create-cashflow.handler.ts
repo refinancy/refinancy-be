@@ -24,25 +24,42 @@ export class CreateCashflowHandler
   async execute(
     command: CreateCashflowCommand,
   ): Promise<CreateCashflowResponse> {
-    console.log('command', command);
-    const startedAt = new Date(command.startedAt);
-    const endedAt = new Date(command.endedAt);
+    let total_recipe_amount = 0;
+    let total_expense_amount = 0;
+    let total = 0;
     const recipes = await this.recipeModel
       .find({
         user_id: command.user_id,
-        receivedAt: { $gte: startedAt, $lte: endedAt },
+        receivedAt: {
+          $gte: new Date(command.startedAt),
+          $lte: new Date(command.endedAt),
+        },
       })
       .exec();
-    console.log('recipes', recipes);
+
+    const expenses = await this.expenseModel
+      .find({
+        user_id: command.user_id,
+        paidAt: {
+          $gte: new Date(command.startedAt),
+          $lte: new Date(command.endedAt),
+        },
+      })
+      .exec();
+    for (const recipe of recipes) {
+      total_recipe_amount += recipe.value;
+    }
+    for (const expense of expenses) {
+      total_expense_amount += expense.value;
+    }
+    total = total_recipe_amount - total_expense_amount;
     const createdCashflow = await this.cashflowModel.create({
       ...command,
       user_id: command.user_id,
+      total_recipe_amount: total_recipe_amount ?? 0,
+      total_expense_amount: total_expense_amount ?? 0,
+      total: total ?? 0,
     });
-    return {
-      ...createdCashflow.toObject(),
-      total_recipe_amount: 0,
-      total_expense_amount: 0,
-      total: 0,
-    };
+    return createdCashflow;
   }
 }

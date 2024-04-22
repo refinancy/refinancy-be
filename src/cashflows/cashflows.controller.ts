@@ -1,27 +1,16 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { tags } from 'src/swagger';
 import { DeleteCashflowDto } from './dto/delete-cashflow.dto';
 import { DeleteCashflowCommand } from './commands/impl/delete-cashflow.command';
-import { UpdateCashflowCommand } from './commands/impl/update-cashflow.command';
-import { UpdateCashflowResponse } from './responses/update-cashflow.response';
-import { UpdateCashflowDto } from './dto/update-cashflow.dto';
 import { QueryCashflowResponse } from './responses/query-cashflow.response';
 import { FindOneCashflowDto } from './dto/find-one-cashflow.dto';
 import { CreateCashflowCommand } from './commands/impl/create-cashflow.command';
 import { CreateCashflowDto } from './dto/create-cashflow.dto';
 import { CreateCashflowResponse } from './responses/create-cashflow.response';
-import { GetCashflowQuery } from './queries/impl/get-cashflow.queries';
 import { GetCashflowsQuery } from './queries/impl/get-cashflows.queries';
+import { GetCashflowByUserIdQuery } from './queries/impl/get-cashflow.queries';
 
 @ApiTags(tags.cashflows.name)
 @Controller('cashflows')
@@ -70,11 +59,11 @@ export class CashflowsController {
     return this.queryBus.execute(new GetCashflowsQuery());
   }
 
-  @Get(':id')
+  @Get(':user_id')
   @ApiOperation({
     summary: `Show Cashflow.`,
   })
-  @ApiParam({ name: 'id', type: String })
+  @ApiParam({ name: 'user_id', type: String })
   @ApiResponse({
     status: 200,
     type: QueryCashflowResponse,
@@ -84,38 +73,8 @@ export class CashflowsController {
   async findOne(
     @Param() params: FindOneCashflowDto,
   ): Promise<QueryCashflowResponse> {
-    return this.queryBus.execute(new GetCashflowQuery(params.id));
+    return this.queryBus.execute(new GetCashflowByUserIdQuery(params.user_id));
   }
-
-  @Put(':id')
-  @ApiOperation({
-    summary: `Update Cashflow.`,
-  })
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({
-    status: 200,
-    type: UpdateCashflowResponse,
-    description: 'Cashflow updated.',
-  })
-  @ApiResponse({ status: 404, description: 'Not found.' })
-  update(
-    @Param('id') id: string,
-    @Body() updateCashflowDto: UpdateCashflowDto,
-  ): Promise<UpdateCashflowResponse> {
-    return this.commandBus.execute(
-      new UpdateCashflowCommand(
-        id,
-        updateCashflowDto.description,
-        updateCashflowDto.user_id,
-        updateCashflowDto.total_recipe_amount,
-        updateCashflowDto.total_expense_amount,
-        updateCashflowDto.total,
-        updateCashflowDto.startedAt,
-        updateCashflowDto.endedAt,
-      ),
-    );
-  }
-
   @Delete(':id')
   @ApiOperation({
     summary: `Delete Cashflow.`,
