@@ -3,6 +3,7 @@
 /node_modules
 /database
 .env
+.terraform
 # Logs
 logs
 *.log
