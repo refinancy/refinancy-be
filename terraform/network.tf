@@ -44,3 +44,12 @@ resource "aws_route_table_association" "table_ass_public" {
   subnet_id      = aws_subnet.subnet_refinancy.id
   route_table_id = aws_route_table.route_table_pub.id
 }
+resource "aws_eip" "nat_eip" {
+  domain     = "vpc"
+  depends_on = [aws_internet_gateway.igw_refinancy]
+
+  tags = {
+    Name  = "NAT IP Elastic"
+    Owner = "Refinancy-tf"
+  }
+}
