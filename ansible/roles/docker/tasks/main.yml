@@ -47,7 +47,7 @@
     
     - name: Clonar repositório do projeto
       git:
-        repo: git@github.com:refinancy/refinancy-be.git
+        repo: https://github.com/refinancy/refinancy-be.git
         dest: /tmp/refinancy-app
         version: HEAD
       become: true
