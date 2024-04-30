@@ -33,7 +33,7 @@
 
     - name: Instalar Docker Compose
       get_url:  
-        url: "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-{{ ansible_system | lower }}-{{ ansible_userspace_architecture }}"
+        url: "https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-{{ ansible_system | lower }}-{{ ansible_userspace_architecture }}"
         dest: /usr/local/bin/docker-compose
         mode: '0755'
       become: true
@@ -48,10 +48,10 @@
     - name: Clonar repositório do projeto
       git:
         repo: https://github.com/refinancy/refinancy-be.git
-        dest: /tmp/refinancy-app
+        dest: /opt/refinancy-app
         version: HEAD
       become: true
     
     - name: Executar o docker-compose
-      command: docker-compose -f /tmp/refinancy-app/docker-compose.yml up -d
+      command: docker-compose -f /opt/refinancy-app/docker-compose.yml up --build -d
       become: true
