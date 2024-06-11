@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../impl/create-user.command';
 import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/interfaces/user.interface';
 import { CreateUserResponse } from 'src/users/responses/create-user.response';
 
@@ -12,15 +13,16 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
   async execute(command: CreateUserCommand): Promise<CreateUserResponse> {
     const user = await this.userModel.findOne({ email: command.email });
-    // find user by email
     if (user) {
       throw new BadRequestException('User already exists');
     }
-    // refactor to use a repository
-    const createdUser = await this.userModel.create(command);
+    const createdUser = await this.userModel.create({
+      ...command,
+      password: await bcrypt.hash(command.password, 10),
+    });
+
     const { password, ...userWithoutPassword } = createdUser.toObject();
 
-    // Retornar o objeto sem o campo password
     return userWithoutPassword;
   }
 }

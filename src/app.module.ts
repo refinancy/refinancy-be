@@ -19,6 +19,7 @@ import { CashflowsController } from './cashflows/cashflows.controller';
 import { CashflowsModule } from './cashflows/cashflows.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
+import { authProviders } from './auth/auth.providers';
 
 @Module({
   imports: [
@@ -29,8 +30,8 @@ import { AuthController } from './auth/auth.controller';
     RecipesModule,
     ExpensesModule,
     AuthModule,
-    PaymentsModule,
-    TransactionsModule,
+    // PaymentsModule,
+    // TransactionsModule,
     CashflowsModule,
     DatabaseModule,
     CqrsModule,

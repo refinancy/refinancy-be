@@ -3,9 +3,8 @@ import { Auth } from '../interfaces/auth.interface';
 
 export const AuthSchema = new mongoose.Schema<Auth>(
   {
+    id: String,
     user_id: String,
-    startedAt: Date,
-    endedAt: Date,
   },
   { timestamps: true },
 );

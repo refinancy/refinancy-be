@@ -1,31 +1,28 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+
 import { CommandBus } from '@nestjs/cqrs';
-import { Request, Response } from 'express';
-import { JwtService } from '@nestjs/jwt';
-import { AuthenticateUserCommand } from './commands/imp/authenticate-user.command';
+import { Response } from 'express';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { SignInCommand } from './commands/imp/sign-in.command';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { User } from 'src/users/interfaces/user.interface';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly jwtService: JwtService,
-  ) {}
-
-  @Get('wise')
-  @UseGuards(AuthGuard('wise'))
-  wiseAuth() {
-    // Redirect to Wise login page.
+  constructor(private readonly commandBus: CommandBus) {}
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(
+    @CurrentUser() user: User,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const jwt = this.commandBus.execute(new SignInCommand(user, response));
+    response.send(jwt);
   }
 
-  @Get('wise/callback')
-  @UseGuards(AuthGuard('wise'))
-  async wiseAuthCallback(@Req() req: Request, @Res() res: Response) {
-    const user = await this.commandBus.execute(
-      new AuthenticateUserCommand(req.user.accessToken),
-    );
-    const payload = { username: user.email, sub: user.id };
-    const token = this.jwtService.sign(payload);
-    res.json({ access_token: token });
+  @UseGuards(JwtAuthGuard)
+  async authenticate(data: any) {
+    return data.user;
   }
 }
