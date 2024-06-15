@@ -17,6 +17,9 @@ import { ExpensesModule } from './expenses/expenses.module';
 import { cashflowsProviders } from './cashflows/cashflows.providers';
 import { CashflowsController } from './cashflows/cashflows.controller';
 import { CashflowsModule } from './cashflows/cashflows.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth/auth.controller';
+import { authProviders } from './auth/auth.providers';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { CashflowsModule } from './cashflows/cashflows.module';
     UsersModule,
     RecipesModule,
     ExpensesModule,
+    AuthModule,
+    // PaymentsModule,
+    // TransactionsModule,
     CashflowsModule,
     DatabaseModule,
     CqrsModule,
@@ -33,6 +39,7 @@ import { CashflowsModule } from './cashflows/cashflows.module';
   controllers: [
     AppController,
     UsersController,
+    AuthController,
     RecipesController,
     ExpensesController,
     CashflowsController,
@@ -41,6 +48,7 @@ import { CashflowsModule } from './cashflows/cashflows.module';
     AppService,
     ...databaseProviders,
     ...usersProviders,
+    ...authProviders,
     ...recipesProviders,
     ...expensesProviders,
     ...cashflowsProviders,

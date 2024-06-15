@@ -84,7 +84,6 @@ export class UsersController {
   async findOne(@Param() params: FindOneUserDto): Promise<QueryUserResponse> {
     return this.queryBus.execute(new GetUserQuery(params.id));
   }
-
   @Put(':id')
   @ApiOperation({
     summary: `Update User.`,
