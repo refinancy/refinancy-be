@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/interfaces/user.interface';
 import { VerifyUserQuery } from '../impl/verify-user.queries';
-import { VerifyUserResponse } from 'src/users/responses/verify-user.response copy';
+import { VerifyUserResponse } from 'src/users/responses/verify-user.response';
 
 @Injectable()
 @QueryHandler(VerifyUserQuery)

@@ -1,6 +1,4 @@
-// src/custom.d.ts
-import { User } from './auth/user.entity'; // Substitua pelo caminho correto da sua entidade User
-
+import { User } from '../src/users/interfaces/user.interface';
 declare global {
   namespace Express {
     interface Request {
