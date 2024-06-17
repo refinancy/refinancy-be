@@ -20,7 +20,6 @@ describe('CashflowsController', () => {
   });
 
   it('should be defined', () => {
-    console.log('controller', controller);
     expect(controller).toBeDefined();
   });
 });

@@ -25,7 +25,7 @@ export class GetCashflowHandler
     query: GetCashflowByUserIdQuery,
   ): Promise<QueryCashflowResponse> {
     const { user_id } = query;
-    console.log('user_id', user_id);
+
     let total_recipe_amount = 0;
     let total_expense_amount = 0;
     let total = 0;
@@ -48,7 +48,7 @@ export class GetCashflowHandler
         },
       })
       .exec();
-    console.log('recipes and expenses', recipes, expenses);
+
     for (const recipe of recipes) {
       total_recipe_amount += recipe.value;
     }
