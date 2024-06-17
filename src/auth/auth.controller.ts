@@ -18,6 +18,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const jwt = this.commandBus.execute(new SignInCommand(user, response));
+
     response.send(jwt);
   }
 

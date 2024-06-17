@@ -8,7 +8,7 @@ import { QueryBus } from '@nestjs/cqrs';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly queryBus: QueryBus) {
     super({
-      emailField: 'email',
+      usernameField: 'email',
     });
   }
 
