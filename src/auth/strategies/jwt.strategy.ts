@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { TokenPayload } from '../interfaces/token-payloade.interface';
 import { QueryBus } from '@nestjs/cqrs';
 import { VerifyUserQuery } from '@src/users/queries/impl/verify-user.queries';
+import { User } from '@src/users/interfaces/user.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -23,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ user_id }: TokenPayload) {
+  async validate({ user_id }: TokenPayload): Promise<User> {
     const user = await this.queryBus.execute(
       new VerifyUserQuery('', '', user_id),
     );
