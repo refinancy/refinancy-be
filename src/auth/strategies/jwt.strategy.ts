@@ -23,8 +23,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ user_id }: TokenPayload): Promise<VerifyUserQuery> {
-    const user = await this.queryBus.execute(new VerifyUserQuery(user_id));
+  async validate({ user_id }: TokenPayload) {
+    const user = await this.queryBus.execute(
+      new VerifyUserQuery('', '', user_id),
+    );
+
     return user;
   }
 }

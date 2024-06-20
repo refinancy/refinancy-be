@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -23,6 +24,7 @@ import { UpdateRecipeCommand } from './commands/impl/update-recipe.command';
 import { DeleteRecipeCommand } from './commands/impl/delete-recipe.command';
 import { GetRecipesQuery } from './queries/impl/get-recipes.queries';
 import { GetRecipeQuery } from './queries/impl/get-recipe.queries';
+import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
 
 @ApiTags(tags.recipes.name)
 @Controller('recipes')
@@ -31,7 +33,7 @@ export class RecipesController {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
-
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({
     summary: `Create Recipe.`,

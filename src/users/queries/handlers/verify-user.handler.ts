@@ -12,12 +12,21 @@ export class VerifyUserHandler implements IQueryHandler<VerifyUserQuery> {
   constructor(@Inject('USER_MODEL') private readonly userModel: Model<User>) {}
 
   async execute(query: VerifyUserQuery): Promise<VerifyUserResponse> {
-    const { email, password } = query;
-    const user = await this.userModel.findOne({ email }).exec();
-    const passwordIsValid = await bcrypt.compare(password, user.password);
-    if (!passwordIsValid) {
-      throw new UnauthorizedException('Credentials are not valid.');
+    const { email, password, user_id } = query;
+    if (user_id) {
+      const user = await this.userModel.findById(user_id).exec();
+
+      if (!user) {
+        throw new UnauthorizedException('Credentials are not valid.');
+      }
+      return user.toObject();
+    } else {
+      const user = await this.userModel.findOne({ email }).exec();
+      const passwordIsValid = await bcrypt.compare(password, user.password);
+      if (!passwordIsValid) {
+        throw new UnauthorizedException('Credentials are not valid.');
+      }
+      return user.toObject();
     }
-    return user.toObject();
   }
 }

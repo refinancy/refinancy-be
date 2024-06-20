@@ -15,16 +15,19 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
     private readonly jwtService: JwtService,
   ) {}
   async execute(command: SignInCommand) {
-    const tokenPayload: TokenPayload = { user_id: command.user.id };
+    const tokenPayload: TokenPayload = { user_id: command.user._id };
     const expires = new Date();
     expires.setSeconds(
       expires.getSeconds() + this.configService.get('JWT_EXPIRES_IN'),
     );
+
     const token = this.jwtService.sign(tokenPayload);
+
     command.response.cookie('Authentication', token, {
       expires,
       httpOnly: true,
     });
+
     return token;
   }
 }

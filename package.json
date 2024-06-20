@@ -33,6 +33,7 @@
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "cli-color": "^2.0.4",
+    "cookie-parser": "^1.4.6",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "joi": "^17.13.1",
