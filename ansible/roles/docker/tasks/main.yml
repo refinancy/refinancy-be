@@ -47,11 +47,13 @@
     
     - name: Clonar repositório do projeto
       git:
-        repo: https://github.com/refinancy/refinancy-be.git
-        dest: /opt/refinancy-app
+        repo: git@github.com:refinancy/refinancy-be.git
+        dest: /home/ubuntu/refinancy-app 
         version: HEAD
       become: true
+      vars:
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     
     - name: Executar o docker-compose
-      command: docker-compose -f /opt/refinancy-app/docker-compose.yml up --build -d
+      command: docker-compose -f /home/ubuntu/refinancy-app/docker-compose.yml up --build -d
       become: true
